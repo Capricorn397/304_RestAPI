@@ -1,0 +1,22 @@
+{
+  "name": "304restapi",
+  "version": "0.0.1",
+  "description": "a rest api for a coursework hand in for 304cem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Capricorn397/304_RestAPI.git"
+  },
+  "author": "Christopher Carr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Capricorn397/304_RestAPI/issues"
+  },
+  "homepage": "https://gitlab.com/Capricorn397/304_RestAPI#README",
+  "dependencies": {
+    "restify": "^4.2.0"
+  }
+}
