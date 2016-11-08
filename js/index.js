@@ -16,4 +16,10 @@ const serv = function(){
 module.exports.start = function(){
 	serv()
 }
+
 serv()
+server.get('/ping', function(req, res, next){
+	res.send('Png')
+	exports.info.logEvent('Sent Pong back from ping request')
+	return next()
+})
