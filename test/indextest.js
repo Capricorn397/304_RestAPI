@@ -6,7 +6,7 @@ before(function(){
 	server.start()
 })
 describe('Start server', function(){
-	it('Sets the server to listen on port 8080', function(){
-		assert.equal(server.info.log[logpoint],'304Server listening at http://[::]:8080','Server Failed to start at correct url')
+	it('Sets the server to listen on port 8000', function(){
+		assert.equal(server.info.log[logpoint],'304Server listening at http://[::]:8000','Server Failed to start at correct url')
 	})
 })

@@ -2,7 +2,7 @@
 const serverclass = require('./serverinfo.js')
 const restify = require('restify')
 const error = ''
-const port = 8080
+const port = 8000
 const server = restify.createServer({
 	name: '304Server',
 	version: '0.0.1'
