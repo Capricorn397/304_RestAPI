@@ -7,7 +7,7 @@ const fsClientId = '3KCQWKC1IDASXU3SH4KZXBRXSC50ZXIB25LKS5O5QYND22FN' //Foursqua
 const fsClientSecret = '2ZX3W41ODK1MWP44YZ5AGOF532W0PHHU5VVQQOAVYZZX1J1H'//Foursquare Client Secret
 const date = new Date()
 const formattedDate = moment(date).format('YYYYMMDD')
-const baseURL = 'https://api.foursquare.com/v2/'
+const baseURL = 'https://api.foursquare.com'
 const options = {
 	provider: 'google',
 	httpAdapter: 'https',
@@ -20,21 +20,21 @@ module.exports.search = function(input) {
 			if (err) {
 				reject(err)
 			}
-			const endURL = `venues/search?ll=${response.latitude},${response.longitude}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
+			const endURL = `/v2/venues/search?ll=52.40,-1.51&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}` /*`venues/search?ll=${response.latitude},${response.longitude}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`*/
 			const URL = baseURL + endURL
-			console.log(URL)
-			request.request({
-				url: URL,
-				method: 'GET',
-				port: 443
-			}, function(res, err){
+			request.get(URL, (res, err) => {
 				if (err) {
 					reject(err)
-				} else {
-					console.log(res)
-					fufill(res)
 				}
+				let str = ''
+				res.on('data', (d) => {
+					str = str + d
+				})
+				res.on('end', () => {
+					const parsed = JSON.parse(str)
+					fufill(parsed)
+				})
 			})
-		})
-	})
+		}
+	)})
 }
