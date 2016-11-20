@@ -19,6 +19,7 @@ const serv = function(){
 module.exports.start = function(){
 	serv()
 }
+
 serv()
 server.get('/search/:location', function(req, res, next){
 	return new Promise(function(fufill, reject) {
@@ -42,5 +43,9 @@ server.get('/search/:location', function(req, res, next){
 })
 server.get('/api/echo/:name', function(req, res, next) {
 	res.send(req.params)
+})
+server.get('/ping', function(req, res, next){
+	res.send('Png')
+	exports.info.logEvent('Sent Pong back from ping request')
 	return next()
 })
