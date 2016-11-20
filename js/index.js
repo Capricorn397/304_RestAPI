@@ -20,13 +20,11 @@ module.exports.start = function(){
 	serv()
 }
 serv()
-server.get('/search', function(req, res, next){
+server.get('/search/:location', function(req, res, next){
 	return new Promise(function(fufill, reject) {
 		const data = []
-		fourSquare.search('coventry')
-		.catch((err) => {
-			console.log(err)
-		})
+		const input = req.params.location
+		fourSquare.search(input)
 		.then((res, err) => {
 			if (err) {
 				reject (err)

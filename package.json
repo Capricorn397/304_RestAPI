@@ -17,6 +17,7 @@
   },
   "homepage": "https://gitlab.com/Capricorn397/304_RestAPI#README",
   "dependencies": {
+    "geocoder": "^0.2.2",
     "http": "0.0.0",
     "https": "^1.0.0",
     "moment": "^2.16.0",
