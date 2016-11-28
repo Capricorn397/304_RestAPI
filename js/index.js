@@ -1,4 +1,5 @@
 'use strict'
+const geoCoder = require('./geoCoder.js')
 const serverclass = require('./serverinfo.js')
 const fourSquare = require('./foursquare.js')
 const restify = require('restify')
@@ -21,31 +22,37 @@ module.exports.start = function(){
 }
 
 serv()
-server.get('/search/:location', function(req, res, next){
+server.get('/search/:location', function(req, res){
 	return new Promise(function(fufill, reject) {
 		const data = []
+		const weather = 'Clear'
 		const input = req.params.location
-		fourSquare.search(input)
-		.then((res, err) => {
-			if (err) {
-				reject (err)
-			}
-			for(let x = 0; x < fsTopTen; x++){
-				data[x] = res.response.venues[x].name
-			}
-			fufill(data)
+		console.log('geo pre')
+		geoCoder(input).then((response) => {
+			console.log('pre-fs.js')
+			fourSquare.search(response, weather)
+			.then((res) => {
+				console.log('post-fs.js')
+				for(let x = 0; x < fsTopTen; x++){
+					console.log(`adding entry ${res.response.venues[x].name}`)
+					data[x] = res.response.venues[x].name
+				}
+				fufill(data)
+			})
+			.then(() => {
+				console.log(data)
+				res.send(data)
+			})
+			.catch((err) => reject(err))
 		})
-		.then(() => {
-			next()
-			return res.send(data)
-		})
+		.catch((err) => res.send(err))
 	})
 })
-server.get('/api/echo/:name', function(req, res, next) {
+
+server.get('/api/echo/:name', function(req, res) {
 	res.send(req.params)
 })
-server.get('/ping', function(req, res, next){
-	res.send('Png')
+server.get('/ping', function(req, res){
+	res.send('Pong')
 	exports.info.logEvent('Sent Pong back from ping request')
-	return next()
 })
