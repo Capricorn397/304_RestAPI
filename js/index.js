@@ -53,12 +53,19 @@ server.get('/search/:location', function(req, res){
 server.get('/api/echo/:name', function(req, res) {
 	res.send(req.params)
 })
+
 server.get('/ping', function(req, res){
 	res.send('Pong')
 	exports.info.logEvent('Sent Pong back from ping request')
 })
+
 server.get('/weather', function(req, res){
-	return new Promise(function(fufill, reject){
-		weather.getWeather(52.4, -1.5, 0).then()
-	}
+	return new Promise(function(fufill, reject) {
+		weather.getWeather(52.4, -1.5, 0).then((response) => {
+			fufill(res.send(response))
+		})
+		.catch((err) => {
+			reject(err)
+		})
+	})
 })
