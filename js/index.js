@@ -37,15 +37,20 @@ server.get('/search/:location', function(req, res, next){
 		})
 		.then(() => {
 			next()
+			exports.info.logEvent(`Returned FourSquare Data for ${req.params.location}`)
 			return res.send(data)
 		})
 	})
 })
 server.get('/api/echo/:name', function(req, res, next) {
 	res.send(req.params)
+	exports.info.logEvent(`Returned the name ${req.params.name}`)
+	next()
 })
-server.get('/ping', function(req, res, next){
-	res.send('Png')
-	exports.info.logEvent('Sent Pong back from ping request')
-	return next()
+server.get('/ping', function(req, res){
+	return new Promise(function(fufill, reject) {
+		exports.info.logEvent('Sent Pong back from ping request')
+		fufill(res.send('Pong'))
+		reject('error')
+	})
 })
