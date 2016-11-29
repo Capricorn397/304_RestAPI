@@ -1,7 +1,6 @@
 'use strict'
 
 const firstArray = 0
-const twoDP = 2
 const request = require ('https')
 const moment = require ('moment')
 const fsClientId = '3KCQWKC1IDASXU3SH4KZXBRXSC50ZXIB25LKS5O5QYND22FN' //Foursquare Client Id
@@ -10,9 +9,10 @@ const date = new Date()
 const formattedDate = moment(date).format('YYYYMMDD')
 const baseURL = 'https://api.foursquare.com'
 
-module.exports.search = function(location, weather) {
+module.exports.search = function(lat, lon, weather) {
 	return new Promise(function(fufill, reject){
-		const endURL = `/v2/venues/search?ll=${location.results[firstArray].geometry.location.lat.toFixed(twoDP)},${location.results[firstArray].geometry.location.lng.toFixed(twoDP)}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
+		console.log(`Weather is ${JSON.stringify(weather.weather[0].main)}`)
+		const endURL = `/v2/venues/search?ll=${lat},${lon}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
 		const URL = baseURL + endURL
 		console.log(URL)
 		request.get(URL, (res, err) => {

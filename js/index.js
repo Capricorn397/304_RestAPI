@@ -6,6 +6,8 @@ const fourSquare = require('./foursquare.js')
 const restify = require('restify')
 const error = ''
 const port = 8000
+const firstArray = 0
+const twoDP = 2
 const fsTopTen = 10
 const server = restify.createServer({
 	name: '304Server',
@@ -23,28 +25,29 @@ module.exports.start = function(){
 }
 
 serv()
-server.get('/search/:location', function(req, res){
+server.use(restify.queryParser())
+server.get('/search?', function(req, res){
 	return new Promise(function(fufill, reject) {
 		const data = []
-		const weather = 'Clear'
-		const input = req.params.location
+		const input = req.query.location
+		const dat = req.query.date
 		console.log('geo pre')
 		geoCoder(input).then((response) => {
-			console.log('pre-fs.js')
-			fourSquare.search(response, weather)
-			.then((res) => {
-				console.log('post-fs.js')
-				for(let x = 0; x < fsTopTen; x++){
-					console.log(`adding entry ${res.response.venues[x].name}`)
-					data[x] = res.response.venues[x].name
-				}
-				fufill(data)
-			})
-			.then(() => {
-				console.log(data)
-				res.send(data)
-			})
-			.catch((err) => reject(err))
+			const lat = response.results[firstArray].geometry.location.lat.toFixed(twoDP)
+			const lon = response.results[firstArray].geometry.location.lng.toFixed(twoDP)
+			weather.getWeatherTime(lat, lon, dat)
+				.then((response) => fourSquare.search(lat, lon, response)
+					.then((res) => {
+						for(let x = 0; x < fsTopTen; x++){
+							data[x] = res.response.venues[x].name
+						}
+						fufill(data)
+					})
+					.then(() => {
+						console.log(data)
+						res.send(data)
+					})
+					.catch((err) => reject(err)))
 		})
 		.catch((err) => res.send(err))
 	})
@@ -61,11 +64,14 @@ server.get('/ping', function(req, res){
 
 server.get('/weather', function(req, res){
 	return new Promise(function(fufill, reject) {
-		weather.getWeather(52.4, -1.5, 0).then((response) => {
-			fufill(res.send(response))
+		geoCoder(req.query.location).then((response) => {
+			weather.getWeatherTime(response.results[firstArray].geometry.location.lat.toFixed(twoDP), response.results[firstArray].geometry.location.lng.toFixed(twoDP), req.query.time).then((respons) => {
+				fufill(res.send(respons))
+			})
+			.catch((err) => {
+				reject(err)
+			})
 		})
-		.catch((err) => {
-			reject(err)
-		})
+
 	})
 })
