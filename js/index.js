@@ -31,7 +31,6 @@ server.get('/search?', function(req, res){
 		const data = []
 		const input = req.query.location
 		const dat = req.query.date
-		console.log('geo pre')
 		geoCoder(input).then((response) => {
 			const lat = response.results[firstArray].geometry.location.lat.toFixed(twoDP)
 			const lon = response.results[firstArray].geometry.location.lng.toFixed(twoDP)
@@ -44,7 +43,6 @@ server.get('/search?', function(req, res){
 						fufill(data)
 					})
 					.then(() => {
-						console.log(data)
 						res.send(data)
 					})
 					.catch((err) => reject(err)))

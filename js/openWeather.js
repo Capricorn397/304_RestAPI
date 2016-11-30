@@ -16,7 +16,6 @@ exports.getWeatherTime = (lat, lng, tme) =>
 					const valDate = new Date(val.dt_txt)
 					const accDateAccuracy = Math.abs(accDate.getTime() - userDate.getTime())
 					const valDateAccuracy = Math.abs(valDate.getTime() - userDate.getTime())
-					console.log(`${accDateAccuracy} vs ${valDateAccuracy}`)
 					return accDateAccuracy > valDateAccuracy ? val : acc
 				}
 			}))
