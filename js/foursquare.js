@@ -11,7 +11,7 @@ const baseURL = 'https://api.foursquare.com'
 
 module.exports.search = function(lat, lon, weather) {
 	return new Promise(function(fufill, reject){
-		console.log(`Weather is ${JSON.stringify(weather.weather[0].main)}`)
+		console.log(`Weather is ${JSON.stringify(weather.weather[firstArray].main)}`)
 		const endURL = `/v2/venues/search?ll=${lat},${lon}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
 		const URL = baseURL + endURL
 		console.log(URL)
