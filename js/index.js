@@ -15,7 +15,7 @@ const server = restify.createServer({
 })
 const serv = function(){
 	exports.info = new serverclass(server.url, port, error, server.name)
-	server.listen(port, function() {
+	server.listen(port, () => {
 		console.log(`Server at ${server.url}`)
 		exports.info.logEvent(`${server.name} listening at ${server.url}`)
 	})
@@ -26,8 +26,9 @@ module.exports.start = function(){
 
 serv()
 server.use(restify.queryParser())
-server.get('/search?', function(req, res){
-	return new Promise(function(fufill, reject) {
+server.get('/search?', (req, res) => {
+	console.log(`Foursquare search for ${req.query.location} with weather at date and time - ${req.query.date}`)
+	return new Promise((fufill, reject) => {
 		const data = []
 		const input = req.query.location
 		const dat = req.query.date
@@ -51,17 +52,20 @@ server.get('/search?', function(req, res){
 	})
 })
 
-server.get('/api/echo/:name', function(req, res) {
+server.get('/echo/:name', (req, res) => {
+	console.log(`Echoing ${req.params.name}`)
 	res.send(req.params)
 })
 
-server.get('/ping', function(req, res){
+server.get('/ping', (req, res) => {
+	console.log('Ping Request')
 	res.send('Pong')
 	exports.info.logEvent('Sent Pong back from ping request')
 })
 
-server.get('/weather', function(req, res){
-	return new Promise(function(fufill, reject) {
+server.get('/weather', (req, res) => {
+	console.log('Direct Weather Search')
+	return new Promise((fufill, reject) => {
 		geoCoder(req.query.location).then((response) => {
 			weather.getWeatherTime(response.results[firstArray].geometry.location.lat.toFixed(twoDP), response.results[firstArray].geometry.location.lng.toFixed(twoDP), req.query.time).then((respons) => {
 				fufill(res.send(respons))
@@ -71,5 +75,22 @@ server.get('/weather', function(req, res){
 			})
 		})
 
+	})
+})
+
+server.get('/categories', (req, res) => {
+	console.log('FourSquare Catagories')
+	return new Promise((fufill, reject) => {
+		fourSquare.getCategories().then((response) => {
+			const out = {}
+			for (const x in response.response.categories) {
+				const temp = response.response.categories[x].name
+				out[ temp ] = response.response.categories[x].id
+			}
+			fufill(res.send(out))
+		})
+		.catch((err) => {
+			reject(err)
+		})
 	})
 })

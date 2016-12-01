@@ -30,3 +30,23 @@ module.exports.search = function(lat, lon, weather) {
 		})
 	}
 )}
+
+module.exports.getCategories = () => {
+	const catURL = `https://api.foursquare.com/v2/venues/categories?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
+	return new Promise((fufill, reject) => {
+		request.get(catURL, (res, err) => {
+			if (err) {
+				reject(err)
+			} else {
+				let str = ''
+				res.on('data', (d) => {
+					str = str + d
+				})
+				res.on('end', () => {
+					const pars = JSON.parse(str)
+					fufill(pars)
+				})
+			}
+		})
+	})
+}
