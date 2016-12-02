@@ -9,10 +9,10 @@ const date = new Date()
 const formattedDate = moment(date).format('YYYYMMDD')
 const baseURL = 'https://api.foursquare.com'
 
-module.exports.search = function(lat, lon, weather) {
+module.exports.search = function(lat, lon, weather, catID) {
 	return new Promise(function(fufill, reject){
 		console.log(`Weather is ${JSON.stringify(weather.weather[firstArray].main)}`)
-		const endURL = `/v2/venues/search?ll=${lat},${lon}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
+		const endURL = `/v2/venues/search?ll=${lat},${lon}&categoryId=${catID}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
 		const URL = baseURL + endURL
 		console.log(URL)
 		request.get(URL, (res, err) => {

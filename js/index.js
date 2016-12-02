@@ -30,13 +30,14 @@ server.get('/search?', (req, res) => {
 	console.log(`Foursquare search for ${req.query.location} with weather at date and time - ${req.query.date}`)
 	return new Promise((fufill, reject) => {
 		const data = []
+		const catID = req.query.catID
 		const input = req.query.location
 		const dat = req.query.date
 		geoCoder(input).then((response) => {
 			const lat = response.results[firstArray].geometry.location.lat.toFixed(twoDP)
 			const lon = response.results[firstArray].geometry.location.lng.toFixed(twoDP)
 			weather.getWeatherTime(lat, lon, dat)
-				.then((response) => fourSquare.search(lat, lon, response)
+				.then((response) => fourSquare.search(lat, lon, response, catID)
 					.then((res) => {
 						for(let x = 0; x < fsTopTen; x++){
 							data[x] = res.response.venues[x].name
