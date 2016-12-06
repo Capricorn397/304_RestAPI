@@ -68,13 +68,13 @@ module.exports = class serverinfo {
 	* @returns {boolean} If token exists in the array
 	*/
 	checkToken(token){
-		return new Promise((fufill, reject) => {
+		return new Promise((fufill) => {
 			for (const x in this.tokens) {
 				if (token === this.tokens[x]) {
 					fufill(true)
 				}
 			}
-			reject(false)
+			fufill(false)
 		})
 	}
 }

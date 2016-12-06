@@ -145,4 +145,5 @@ server.get('/checkLogin', (req, res) => {
 			res.send('Not logged in')
 		}
 	})
+	.catch((err) => res.send(err))
 })
