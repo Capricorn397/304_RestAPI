@@ -3,6 +3,7 @@ const geoCoder = require('./geoCoder.js')
 const weather = require('./openWeather.js')
 const serverclass = require('./serverinfo.js')
 const fourSquare = require('./foursquare.js')
+const auth = require('./auth.js')
 const restify = require('restify')
 const error = ''
 const port = 8000
@@ -93,5 +94,32 @@ server.get('/categories', (req, res) => {
 		.catch((err) => {
 			reject(err)
 		})
+	})
+})
+
+server.post('/register', (req, res) => {
+	console.log('Register User')
+	return new Promise((fufill, reject) => {
+		const username = req.headers.username
+		const password = req.headers.password
+		auth.register(username, password).then((token) => fufill(res.send(token)))
+		.catch((err) => reject(res.send(err)))
+	})
+})
+
+server.get('/login', (req, res) => {
+	console.log('Login')
+	return new Promise((fufill, reject) => {
+		const username = req.headers.username
+		const password = req.headers.password
+		console.log(`${username} & ${password}`)
+		auth.login(username, password).then((token) => {
+			if (token === false) {
+				reject(res.send('Invalid Login'))
+			} else {
+				fufill(res.send(token))
+			}
+		})
+		.catch((err) => reject(res.send(err)))
 	})
 })
