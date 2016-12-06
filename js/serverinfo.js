@@ -7,13 +7,15 @@ module.exports = class serverinfo {
 	* @param {Integer} port - the server port
 	* @param {string} error - Any error occurances
 	* @param {string} name - The name of the server instance
+	* @param {string} tokens - The list of tokens of logged in users
 	*/
-	constructor(url, port, error, name) {
+	constructor(url, port, error, name, tokens) {
 		this.url = url
 		this.port = port
 		this.log = []
 		this.error = error
 		this.name = name
+		this.tokens = []
 	}
 
 	/**
@@ -33,7 +35,7 @@ module.exports = class serverinfo {
 	/**
 	* Add to log key value pairs
 	* @param {string} event - An event to be added to the log
-	* @returns {Integer} HTML - Returns a staus code
+	* @returns {Integer} HTML - Returns a status code
 	*/
 	logEvent(event){
 		this.log.push(event)
@@ -51,5 +53,28 @@ module.exports = class serverinfo {
 	*/
 	set nameValue(name){
 		this.name = name
+	}
+	/**
+	* Adds token to liste
+	* @param {string} token - The user's login token
+	* @returns {Integer} HTML - Returns a status code
+	*/
+	addToken(token){
+		this.tokens.push(token)
+	}
+	/**
+	* Checks for user login token
+	* @param {string} token - The token to be checked for
+	* @returns {boolean} If token exists in the array
+	*/
+	checkToken(token){
+		return new Promise((fufill) => {
+			for (const x in this.tokens) {
+				if (token === this.tokens[x]) {
+					fufill(true)
+				}
+			}
+			fufill(false)
+		})
 	}
 }
