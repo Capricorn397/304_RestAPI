@@ -1,5 +1,6 @@
 'use strict'
 const geoCoder = require('./geoCoder.js')
+const hash = require('bcrypt')
 const weather = require('./openWeather.js')
 const serverclass = require('./serverinfo.js')
 const fourSquare = require('./foursquare.js')
@@ -27,6 +28,7 @@ module.exports.start = function(){
 
 serv()
 server.use(restify.queryParser())
+server.use(restify.bodyParser())
 server.get('/search?', (req, res) => {
 	console.log(`Foursquare search for ${req.query.location} with weather at date and time - ${req.query.date}`)
 	return new Promise((fufill, reject) => {
@@ -100,9 +102,8 @@ server.get('/categories', (req, res) => {
 server.post('/register', (req, res) => {
 	console.log('Register User')
 	return new Promise((fufill, reject) => {
-		const username = req.headers.username
-		const password = req.headers.password
-		auth.register(username, password).then((token) => fufill(res.send(token)))
+		console.log(req.body.pass)
+		auth.register(req.body).then((token) => fufill(res.send(token)))
 		.catch((err) => reject(res.send(err)))
 	})
 })
@@ -112,14 +113,36 @@ server.get('/login', (req, res) => {
 	return new Promise((fufill, reject) => {
 		const username = req.headers.username
 		const password = req.headers.password
-		console.log(`${username} & ${password}`)
-		auth.login(username, password).then((token) => {
-			if (token === false) {
-				reject(res.send('Invalid Login'))
-			} else {
-				fufill(res.send(token))
-			}
+		auth.salt(username).then((salt) => {
+			hash.hash(password, salt, (err, pass) => {
+				if(err) {
+					reject(err)
+				}
+				console.log(`${username} & ${pass}`)
+				auth.login(username, pass).then((token) => {
+					if (token === false) {
+						reject(res.send('Invalid Login'))
+					} else {
+						hash.hash(token, salt, (err, toke) => {
+							if(err) {
+								reject(err)
+							}
+							exports.info.addToken(toke)
+							fufill(res.send(toke))
+						})
+					}
+				})
+				.catch((err) => reject(res.send(err)))
+			})
 		})
-		.catch((err) => reject(res.send(err)))
+	})
+})
+server.get('/checkLogin', (req, res) => {
+	exports.info.checkToken(req.headers.token).then((check) => {
+		if(check === true) {
+			res.send('Logged in')
+		} else {
+			res.send('Not logged in')
+		}
 	})
 })
