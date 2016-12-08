@@ -9,6 +9,7 @@ const locConvert = require ('geocoder')
 */
 module.exports = (input) =>
 	new Promise((fufill, reject) => {
+		//Following function cannot be changed to arrow as package does not support it
 		locConvert.geocode(input, function(err, res){
 			if (err) {
 				reject(err)

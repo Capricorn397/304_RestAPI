@@ -17,8 +17,9 @@ const baseURL = 'https://api.foursquare.com'
 * @param {string} catID - The foursquare catagory ID chosen to limit results
 * @returns {JSON} The returned foursquare venues
 */
-module.exports.search = function(lat, lon, weather, catID) {
-	return new Promise(function(fufill, reject){
+module.exports.search = (lat, lon, weather, catID) => {
+	console.log('Start')
+	return new Promise((fufill, reject) => {
 		//output weather
 		console.log(`Weather is ${JSON.stringify(weather.weather[firstArray].main)}`)
 		//make foursquare query url

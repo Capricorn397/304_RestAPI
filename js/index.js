@@ -20,7 +20,7 @@ const server = restify.createServer({
 * Creates the server on the port 8000
 * @returns {NULL} nothing returned server remains on and listening on port
 */
-const serv = function(){
+const serv = () => {
 	exports.info = new serverclass(server.url, port, error, server.name)
 	server.listen(port, () => {
 		console.log(`Server at ${server.url}`)
@@ -31,9 +31,7 @@ const serv = function(){
 * Function to export starting the server for use in tests
 * @returns {NULL} nothing returns just keeps server listening on port
 */
-module.exports.start = function(){
-	serv()
-}
+module.exports.start = () => serv()
 
 serv()
 //Tell the server to parse querys and bodys
