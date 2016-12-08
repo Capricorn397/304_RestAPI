@@ -204,3 +204,37 @@ server.post('/addFavourite', (req, res) => {
 		})
 	})
 })
+
+server.get('/viewFavourites', (req, res) => {
+	console.log('View Favourites')
+	return new Promise((fufill, reject) => {
+		auth.salt(req.headers.username).then((salt) => {
+			hash.hash(req.headers.password, salt, (err, pass) => {
+				if (err) {
+					reject(err)
+				}
+				auth.login(req.headers.username, pass).then((bool) => {
+					if (bool === false) {
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						auth.viewFavourite(req.headers.username).then((items) => {
+							if(items === false) {
+								res.send('No Favourites')
+							} else {
+								res.send(items)
+							}
+						}).catch((err) => reject(err))
+					}
+				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
+			})
+		})
+	})
+})
+
+server.del('/delFavourite', (req, res) => {
+	console.log('tbc')
+})
+
+server.put('/changePassword', (req, res) => {
+	console.log('tbc')
+})

@@ -27,7 +27,6 @@ module.exports.login = (username, password) => {
 		//create SQL query
 		const loginQuery = `SELECT username FROM Users WHERE username='${username}' AND password='${password}'`
 		//start connection to database and send query
-		console.log(loginQuery)
 		pool.query(loginQuery, (err, rows) => {
 			if (err) {
 				console.log(err)
@@ -37,7 +36,6 @@ module.exports.login = (username, password) => {
 			if (rows.length === zero) {
 				reject(false)
 			} else {
-				console.log('pass')
 				fufill(true)
 			}
 		})
@@ -119,6 +117,24 @@ module.exports.addFavourite = (user, location) => {
 				reject(err)
 			} else {
 				fufill(true)
+			}
+		})
+	})
+}
+
+module.exports.viewFavourite = (user) => {
+	console.log('view favourites')
+	return new Promise((fufill, reject) => {
+		const getFavQuery = `SELECT favourites FROM favourites WHERE username='${user}'`
+		pool.query(getFavQuery, (err, rows) => {
+			if (err) {
+				console.log(err)
+				reject(err)
+			}
+			if (rows.length === zero) {
+				reject(false)
+			} else {
+				fufill(rows)
 			}
 		})
 	})
