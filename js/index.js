@@ -13,8 +13,19 @@ const twoDP = 2
 const fsTopTen = 10
 const server = restify.createServer({
 	name: '304Server',
-	version: '0.0.1'
+	version: '0.1.0'
 })
+const httpCodes = {
+	OK: 200,
+	Created: 201,
+	Unauthorized: 401,
+	Forbidden: 403,
+	notFound: 404,
+	methodNotAllowed: 405,
+	requestTimeout: 408,
+	internalServerError: 500
+}
+
 
 /**
 * Creates the server on the port 8000
@@ -64,7 +75,7 @@ server.get('/search?', (req, res) => {
 					})
 					.catch((err) => reject(err)))
 		})
-		.catch((err) => res.send(err))
+		.catch((err) => res.send(httpCodes.internalServerError, err))
 	})
 })
 
@@ -96,7 +107,7 @@ server.get('/weather', (req, res) => {
 				fufill(res.send(respons))
 			})
 			.catch((err) => {
-				reject(err)
+				reject(res.send(httpCodes.internalServerError, err))
 			})
 		})
 
@@ -118,7 +129,7 @@ server.get('/categories', (req, res) => {
 			fufill(res.send(out))
 		})
 		.catch((err) => {
-			reject(err)
+			reject(res.send(httpCodes.internalServerError, err))
 		})
 	})
 })
@@ -130,8 +141,8 @@ server.post('/register', (req, res) => {
 	console.log('Register User')
 	return new Promise((fufill, reject) => {
 		console.log(req.body.pass)
-		auth.register(req.body).then((token) => fufill(res.send(token)))
-		.catch((err) => reject(res.send(err)))
+		auth.register(req.body).then((token) => fufill(res.send(httpCodes.Created, token)))
+		.catch((err) => reject(res.send(httpCodes.internalServerError, err)))
 	})
 })
 
@@ -149,33 +160,18 @@ server.get('/login', (req, res) => {
 					reject(err)
 				}
 				console.log(`${username} & ${pass}`)
-				auth.login(username, pass).then((token) => {
-					if (token === false) {
+				auth.login(username, pass).then((bool) => {
+					if (bool === false) {
 						reject(res.send('Invalid Login'))
 					} else {
-						hash.hash(token, salt, (err, toke) => {
-							if(err) {
-								reject(err)
-							}
-							exports.info.addToken(toke)
-							fufill(res.send(toke))
-						})
+						if(err) {
+							reject(err)
+						}
+						fufill(res.send('Test'))
 					}
 				})
-				.catch((err) => reject(res.send(err)))
+				.catch((err) => reject(res.send(httpCodes.Unauthorized, err)))
 			})
 		})
 	})
-})
-
-//NEEDS REMOVING DOES NOT FIT REST REQUIREMENTS
-server.get('/checkLogin', (req, res) => {
-	exports.info.checkToken(req.headers.token).then((check) => {
-		if(check === true) {
-			res.send('Logged in')
-		} else {
-			res.send('Not logged in')
-		}
-	})
-	.catch((err) => res.send(err))
 })

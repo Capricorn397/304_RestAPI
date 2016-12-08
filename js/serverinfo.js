@@ -7,15 +7,14 @@ module.exports = class serverinfo {
 	* @param {Integer} port - the server port
 	* @param {string} error - Any error occurances
 	* @param {string} name - The name of the server instance
-	* @param {string} tokens - The list of tokens of logged in users
+	* @param {integer: string} httpCodes - The basic codes for http
 	*/
-	constructor(url, port, error, name, tokens) {
+	constructor(url, port, error, name) {
 		this.url = url
 		this.port = port
 		this.log = []
 		this.error = error
 		this.name = name
-		this.tokens = []
 	}
 
 	/**
@@ -61,20 +60,5 @@ module.exports = class serverinfo {
 	*/
 	addToken(token){
 		this.tokens.push(token)
-	}
-	/**
-	* Checks for user login token
-	* @param {string} token - The token to be checked for
-	* @returns {boolean} If token exists in the array
-	*/
-	checkToken(token){
-		return new Promise((fufill) => {
-			for (const x in this.tokens) {
-				if (token === this.tokens[x]) {
-					fufill(true)
-				}
-			}
-			fufill(false)
-		})
 	}
 }
