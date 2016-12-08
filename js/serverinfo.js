@@ -7,7 +7,6 @@ module.exports = class serverinfo {
 	* @param {Integer} port - the server port
 	* @param {string} error - Any error occurances
 	* @param {string} name - The name of the server instance
-	* @param {integer: string} httpCodes - The basic codes for http
 	*/
 	constructor(url, port, error, name) {
 		this.url = url

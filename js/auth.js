@@ -154,3 +154,30 @@ module.exports.delFavourite = (user, location) => {
 		})
 	})
 }
+
+module.exports.changePassword = (user, newPass) => {
+	console.log('Change Password')
+	return new Promise((fufill, reject) => {
+		//generates a salt to be added for the hashing
+		hash.genSalt(sLength, (err, salt) => {
+			if (err) {
+				reject(err)
+			}
+			//hashes the password using the salt as extra security
+			hash.hash(newPass, salt, (err, hash) => {
+				if(err) {
+					reject(err)
+				}
+				const passQuery = `UPDATE Users SET password='${hash}', salt='${salt}' WHERE username='${user}'`
+				pool.query(passQuery, (err) => {
+					if (err) {
+						console.log(err)
+						reject(err)
+					} else {
+						fufill(true)
+					}
+				})
+			})
+		})
+	})
+}

@@ -189,7 +189,8 @@ server.post('/addFavourite', (req, res) => {
 				const location = JSON.stringify(req.body)
 				auth.login(req.headers.username, pass).then((bool) => {
 					if (bool === false) {
-						reject(res.send(httpCodes.Unauthorized))
+						err = 'Unauthorized'
+						reject(err)
 					} else {
 						auth.addFavourite(req.headers.username, location).then((status) => {
 							if(status === false) {
@@ -199,9 +200,16 @@ server.post('/addFavourite', (req, res) => {
 							}
 						}).catch((err) => reject(err))
 					}
-				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
+				})
+				.catch((err) => {
+					if (err === false){
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						reject(res.send(httpCodes.internalServerError, err))
+					}
+				})
 			})
-		})
+		}).catch((err) => reject(res.send(httpCodes.Unauthorized, err)))
 	})
 })
 
@@ -225,7 +233,13 @@ server.get('/viewFavourites', (req, res) => {
 							}
 						}).catch((err) => reject(err))
 					}
-				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
+				})	.catch((err) => {
+					if (err === false){
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						reject(res.send(httpCodes.internalServerError, err))
+					}
+				})
 			})
 		})
 	})
@@ -252,12 +266,47 @@ server.del('/delFavourite', (req, res) => {
 							}
 						}).catch((err) => reject(err))
 					}
-				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
+				})	.catch((err) => {
+					if (err === false){
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						reject(res.send(httpCodes.internalServerError, err))
+					}
+				})
 			})
 		})
 	})
 })
 
 server.put('/changePassword', (req, res) => {
-	console.log('tbc')
+	console.log('Change Password')
+	return new Promise((fufill, reject) => {
+		auth.salt(req.headers.username).then((salt) => {
+			hash.hash(req.headers.password, salt, (err, pass) => {
+				if (err) {
+					reject(err)
+				}
+				const newPass = req.body.newPass
+				auth.login(req.headers.username, pass).then((bool) => {
+					if (bool === false) {
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						auth.changePassword(req.headers.username, newPass).then((status) => {
+							if(status === false) {
+								res.send(httpCodes.internalServerError)
+							} else {
+								res.send(httpCodes.OK)
+							}
+						}).catch((err) => reject(err))
+					}
+				})	.catch((err) => {
+					if (err === false){
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						reject(res.send(httpCodes.internalServerError, err))
+					}
+				})
+			})
+		})
+	})
 })
