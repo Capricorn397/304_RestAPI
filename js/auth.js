@@ -139,3 +139,18 @@ module.exports.viewFavourite = (user) => {
 		})
 	})
 }
+
+module.exports.delFavourite = (user, location) => {
+	console.log('delete favourites')
+	return new Promise((fufill, reject) => {
+		const delFavQuery = `DELETE FROM favourites WHERE username='${user}' AND favourites='${location}'`
+		pool.query(delFavQuery, (err) => {
+			if (err) {
+				console.log(err)
+				reject(err)
+			} else {
+				fufill(true)
+			}
+		})
+	})
+}

@@ -232,7 +232,30 @@ server.get('/viewFavourites', (req, res) => {
 })
 
 server.del('/delFavourite', (req, res) => {
-	console.log('tbc')
+	console.log('Delete Favourite')
+	return new Promise((fufill, reject) => {
+		auth.salt(req.headers.username).then((salt) => {
+			hash.hash(req.headers.password, salt, (err, pass) => {
+				if (err) {
+					reject(err)
+				}
+				const location = JSON.stringify(req.body)
+				auth.login(req.headers.username, pass).then((bool) => {
+					if (bool === false) {
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						auth.delFavourite(req.headers.username, location).then((status) => {
+							if(status === false) {
+								res.send(httpCodes.internalServerError)
+							} else {
+								res.send(httpCodes.OK)
+							}
+						}).catch((err) => reject(err))
+					}
+				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
+			})
+		})
+	})
 })
 
 server.put('/changePassword', (req, res) => {
