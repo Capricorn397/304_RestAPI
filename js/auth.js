@@ -25,10 +25,9 @@ module.exports.login = (username, password) => {
 	console.log('Pre-SQL Request')
 	return new Promise((fufill, reject) => {
 		//create SQL query
-		const loginQuery = `SELECT username FROM Users \
-												WHERE username='${username}' \
-												AND password='${password}'`
+		const loginQuery = `SELECT username FROM Users WHERE username='${username}' AND password='${password}'`
 		//start connection to database and send query
+		console.log(loginQuery)
 		pool.query(loginQuery, (err, rows) => {
 			if (err) {
 				console.log(err)
@@ -38,6 +37,7 @@ module.exports.login = (username, password) => {
 			if (rows.length === zero) {
 				reject(false)
 			} else {
+				console.log('pass')
 				fufill(true)
 			}
 		})
@@ -98,6 +98,27 @@ module.exports.salt = (username) => {
 				reject(false)
 			} else {
 				fufill(rows[zero].salt)
+			}
+		})
+	})
+}
+
+/**
+* Adds a Foursquare location to a users favourites
+* @param {string} user - the username of the user
+* @param {string} location - a stringified JSON of the name and link to a foursquare venues
+* @returns {boolean} If the add was Successful
+*/
+module.exports.addFavourite = (user, location) => {
+	console.log('add favourite')
+	return new Promise((fufill, reject) => {
+		const favQuery = `INSERT INTO restAPI.favourites (\`username\`, \`favourites\`) VALUES ('${user}', '${location}')`
+		pool.query(favQuery, (err) => {
+			if (err) {
+				console.log(err)
+				reject(err)
+			} else {
+				fufill(true)
 			}
 		})
 	})

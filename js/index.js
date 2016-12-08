@@ -110,7 +110,6 @@ server.get('/weather', (req, res) => {
 				reject(res.send(httpCodes.internalServerError, err))
 			})
 		})
-
 	})
 })
 
@@ -148,7 +147,7 @@ server.post('/register', (req, res) => {
 
 //Logs a user in
 //INPUT: username (string), password (string)
-//OUTPUT: TOKEN (NEEDS REMOVING TO FIT REST REQUIREMENTS)
+//OUTPUT: Success string
 server.get('/login', (req, res) => {
 	console.log('Login')
 	return new Promise((fufill, reject) => {
@@ -167,10 +166,40 @@ server.get('/login', (req, res) => {
 						if(err) {
 							reject(err)
 						}
-						fufill(res.send('Test'))
+						fufill(res.send('Success'))
 					}
 				})
 				.catch((err) => reject(res.send(httpCodes.Unauthorized, err)))
+			})
+		})
+	})
+})
+
+//Adds a location to a users favourites
+//INPUT: A foursquare location in JSON with link attached
+//OUTPUT: HTTP code for added or error
+server.post('/addFavourite', (req, res) => {
+	console.log('Add Favourite')
+	return new Promise((fufill, reject) => {
+		auth.salt(req.headers.username).then((salt) => {
+			hash.hash(req.headers.password, salt, (err, pass) => {
+				if (err) {
+					reject(err)
+				}
+				const location = JSON.stringify(req.body)
+				auth.login(req.headers.username, pass).then((bool) => {
+					if (bool === false) {
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						auth.addFavourite(req.headers.username, location).then((status) => {
+							if(status === false) {
+								res.send(httpCodes.internalServerError)
+							} else {
+								res.send(httpCodes.Created)
+							}
+						}).catch((err) => reject(err))
+					}
+				}).catch((err) => reject(res.send(httpCodes.internalServerError, err)))
 			})
 		})
 	})
