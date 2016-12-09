@@ -315,3 +315,11 @@ server.get('/home.html', restify.serveStatic({
 	directory: './views',
 	file: 'home.html'
 }))
+server.get('views/addOns/timePicker.js', restify.serveStatic({
+	directory: './views/addOns',
+	file: 'timePicker.js'
+}))
+server.get('views/addOns/timePickerCSS.css', restify.serveStatic({
+	directory: './views/addOns',
+	file: 'timePickerCSS.css'
+}))
