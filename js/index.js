@@ -310,3 +310,8 @@ server.put('/changePassword', (req, res) => {
 		})
 	})
 })
+
+server.get('/home.html', restify.serveStatic({
+	directory: './views',
+	file: 'home.html'
+}))
