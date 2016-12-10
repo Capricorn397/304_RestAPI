@@ -1,9 +1,19 @@
 <!DOCTYPE HTML>
 <html>
 	<style>
+		#return {
+			position: absolute;
+			left: 10%;
+			top: 60%;
+		}
+		#extra{
+			position: absolute;
+			right: 5%;
+			top: 5%;
+		}
 		.title {
 			position: absolute;
-			left: 40%;
+			left: 45%;
 			color: black;
 			top: 5%;
 		}
@@ -22,16 +32,173 @@
 		<h1 class="title">Things to do API</h1>
 	</head>
 	<body>
+		<div id="return">
+		</div>
+		<div id="myFavourites">
+		</div>
+		<div id="extra">
+			<button id="viewFavs">View Favourites</button>
+			<script type="text/javascript">
+				document.getElementById('viewFavs').onclick = function(){
+					event.preventDefault();
+					const user = prompt('Username');
+					const pass = prompt('password');
+					const myFavs = $.ajax({
+						type: 'GET',
+						url: '/viewFavourites',
+						headers: {
+							username: user,
+							password: pass
+						},
+						error: function(err) {
+							console.log(err);
+						},
+						success: function() {
+							console.log(myFavs);
+							const div = document.getElementById('myFavourites');
+							const par = document.createElement('P');
+							const p = div.appendChild(par);
+							const string = myFavs.responseText;
+							const array = string.split(',');
+							console.log(array);
+							let c = 10
+							for (const x in array) {
+								if(array[c] === undefined) {
+									break;
+								}
+								p.appendChild(document.createTextNode(array[x] + ': '));
+								a = document.createElement('a');
+								linkText = document.createTextNode(array[c]);
+									a.appendChild(linkText);
+									a.title = array[c];
+									a.href = array[c];
+								p.appendChild(a);
+								p.appendChild(document.createElement('br'));
+								c++
+							}
+							var delButton = p.appendChild(document.createElement('button'));
+							delButton.id = 'del';
+							delButton.appendChild(document.createTextNode('Delete Favourites'));
+							document.body.appendChild(p);
+							document.getElementById('del').onclick = function() {
+								const user = prompt('Username');
+								const pass = prompt('password');
+								$.ajax({
+									type: 'DELETE',
+									url: '/delFavourite',
+									headers: {
+										username: user,
+										password: pass
+									},
+									data: string,
+									success: function() {
+										p.appendChild(document.createTextNode('Deleted'));
+									}
+								})
+							}
+						}
+					})
+				}
+			</script>
+		</div>
 		<form class="box" id="main">
-			<input type="text" name="location" placeholder="Location">
-			<select name="catagories">
+			<input type="text" id="loc" name="location" placeholder="Location">
+			<select id="catagory" name="catagories">
 				<option selected="selected" disabled="disabled">Select a catagory</option>
-  			<option value="cat4">cat4</option>
-  			<option value="cat3">cat3</option>
-  			<option value="cat2">cat2</option>
-  			<option value="cat">cat1</option>
+  			<option value="4d4b7104d754a06370d81259">Entertainment</option>
+  			<option value="4d4b7105d754a06372d81259">Education</option>
+  			<option value="4d4b7105d754a06373d81259">Event</option>
+  			<option value="4d4b7105d754a06374d81259">Food</option>
+				<option value="4d4b7105d754a06376d81259">Nightlife</option>
+				<option value="4d4b7105d754a06377d81259">Outdoors</option>
+				<option value="4d4b7105d754a06375d81259">Businesses</option>
+				<option value="4e67e38e036454776db1fb3a">Residences</option>
+				<option value="4d4b7105d754a06378d81259">Shops</option>
+				<option value="4d4b7105d754a06379d81259">Travel</option>
 			</select>
+			<input type="text" id="datetimepicker">
 			<input type="submit">
 		</form>
 	</body>
+	<script type="text/javascript">
+	$('#datetimepicker').datetimepicker({
+	timeFormat: "hh:mm:ss",
+	dateFormat: "yy-mm-dd"
+	});
+</script>
+<script type="text/javascript">
+const div = document.getElementById('return');
+const par = document.createElement('P');
+const p = div.appendChild(par);
+	$(document).ready(function() {
+		$('form').submit(function() {
+			event.preventDefault();
+			var a = '';
+			var linkText = '';
+			const addLoc = [];
+			const addLink = [];
+			const location = document.getElementById('loc').value;
+			const catagory = document.getElementById('catagory').value;
+			const dateTime = document.getElementById('datetimepicker').value;
+			console.log('variables are ' + location + ' ' + catagory + ' ' + dateTime);
+			par.innerHTML = '';
+			const fsData = $.ajax({
+				type: 'GET',
+				url: '/search?location='+location+'&catID='+catagory+'&dat='+dateTime,
+				error: function() {
+					console.log(err);
+				},
+				success: function() {
+					console.log(fsData);
+					p.appendChild(document.createTextNode('Weather will be ' + fsData.responseJSON.weather));
+					p.appendChild(document.createElement('br'));
+					p.appendChild(document.createElement('br'));
+					for (const x in fsData.responseJSON.locations) {
+						addLoc[x] = fsData.responseJSON.locations[x]
+						p.appendChild(document.createTextNode(fsData.responseJSON.locations[x] + ': '));
+						a = document.createElement('a');
+						if (fsData.responseJSON.links[x] === null) {
+							addLink[x] = 'No Website On FourSquare';
+						 linkText = document.createTextNode('No Website On FourSquare');
+						 a.appendChild(linkText);
+					 } else {
+						 	addLink[x] = fsData.responseJSON.links[x];
+							linkText = document.createTextNode(fsData.responseJSON.links[x]);
+							a.appendChild(linkText);
+							a.title = fsData.responseJSON.links[x];
+							a.href = fsData.responseJSON.links[x];
+						}
+
+						p.appendChild(a);
+						p.appendChild(document.createElement('br'));
+					}
+					p.appendChild(document.createElement('br'));
+					var favButton = p.appendChild(document.createElement('button'));
+					favButton.id = 'fav';
+					favButton.appendChild(document.createTextNode('Add to Favourites'));
+					document.body.appendChild(p);
+					document.getElementById('fav').onclick = function() {
+						const user = prompt('Username');
+						const pass = prompt('password');
+						$.ajax({
+							type: 'POST',
+							url: '/addFavourite',
+							headers: {
+								username: user,
+								password: pass
+							},
+							data: JSON.stringify(addLoc + addLink),
+							error: function(err) {
+								console.log(err);
+							},
+							success: function() {
+								p.appendChild(document.createTextNode('Added'));
+							}
+						})
+					}
+				}
+			});
+		})
+	})
+	</script>
 </html>
