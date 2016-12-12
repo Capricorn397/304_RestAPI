@@ -140,10 +140,10 @@ module.exports.viewFavourite = (user) => {
 	})
 }
 
-module.exports.delFavourite = (user, location) => {
+module.exports.delFavourite = (user) => {
 	console.log('delete favourites')
 	return new Promise((fufill, reject) => {
-		const delFavQuery = `DELETE FROM favourites WHERE username='${user}' AND favourites='${location}'`
+		const delFavQuery = `DELETE FROM favourites WHERE username='${user}'`
 		pool.query(delFavQuery, (err) => {
 			if (err) {
 				console.log(err)
