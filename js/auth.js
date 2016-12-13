@@ -21,15 +21,13 @@ const sLength = 10
 * @param {string} password - The (should be hashed) passsword of the user trying to login
 * @returns {boolean} if the user credentials were correct
 */
-module.exports.login = (username, password) => {
-	console.log('Pre-SQL Request')
+module.exports.login = function(username, password) {
 	return new Promise((fufill, reject) => {
 		//create SQL query
 		const loginQuery = `SELECT username FROM Users WHERE username='${username}' AND password='${password}'`
 		//start connection to database and send query
 		pool.query(loginQuery, (err, rows) => {
 			if (err) {
-				console.log(err)
 				reject(err)
 			}
 			//if no rows returned fail login else return true
@@ -47,26 +45,17 @@ module.exports.login = (username, password) => {
 * @param {JSON} body - the body of the post request including the username and unhashed or salted password
 * @returns {string} Successful registration message
 */
-module.exports.register = (body) => {
-	console.log(body)
+module.exports.register = function(body) {
 	return new Promise((fufill, reject) => {
 		//generates a salt to be added for the hashing
-		hash.genSalt(sLength, (err, salt) => {
-			if (err) {
-				reject(err)
-			}
+		hash.genSalt(sLength, (salt) => {
 			//hashes the password using the salt as extra security
-			hash.hash(body.pass, salt, (err, hash) => {
-				if(err) {
-					reject(err)
-				}
+			hash.hash(body.pass, salt, (hash) => {
 				//Create sql query
 				const regQuery = `INSERT INTO restAPI.Users (\`username\`,\`password\`,\`salt\`) VALUES ('${body.user}','${hash}','${salt}')`
-				console.log(regQuery)
 				//save username, hashed password and salt to database
 				pool.query(regQuery, (err) => {
 					if (err) {
-						console.log(err)
 						reject(err)
 					} else {
 						fufill('User Registered')
@@ -82,8 +71,7 @@ module.exports.register = (body) => {
 * @param {string} username - The username used to get the correct salt
 * @returns {string} The given users salt
 */
-module.exports.salt = (username) => {
-	console.log('Getting Salt')
+module.exports.salt = function(username) {
 	return new Promise((fufill, reject) => {
 		//create sql query
 		const saltQuery = `SELECT salt FROM Users WHERE username='${username}'`
@@ -101,19 +89,37 @@ module.exports.salt = (username) => {
 	})
 }
 
+module.exports.delUser = function(user) {
+	return new Promise((fufill, reject) => {
+		const delFavQuery = `DELETE FROM favourites WHERE username='${user}'`
+		const delUserQuery = `DELETE FROM Users WHERE username='${user}'`
+		pool.query(delFavQuery, (err) => {
+			if (err) {
+				reject(err)
+			} else {
+				pool.query(delUserQuery, (err) => {
+					if(err) {
+						reject(err)
+					} else {
+						fufill(true)
+					}
+				})
+			}
+		})
+	})
+}
+
 /**
 * Adds a Foursquare location to a users favourites
 * @param {string} user - the username of the user
 * @param {string} location - a stringified JSON of the name and link to a foursquare venues
 * @returns {boolean} If the add was Successful
 */
-module.exports.addFavourite = (user, location) => {
-	console.log('add favourite')
+module.exports.addFavourite = function(user, location) {
 	return new Promise((fufill, reject) => {
-		const favQuery = `INSERT INTO restAPI.favourites (\`username\`, \`favourites\`) VALUES ('${user}', '${location}')`
+		const favQuery = `INSERT INTO favourites (\`username\`, \`favourites\`) VALUES ('${user}', '${location}')`
 		pool.query(favQuery, (err) => {
 			if (err) {
-				console.log(err)
 				reject(err)
 			} else {
 				fufill(true)
@@ -122,13 +128,11 @@ module.exports.addFavourite = (user, location) => {
 	})
 }
 
-module.exports.viewFavourite = (user) => {
-	console.log('view favourites')
+module.exports.viewFavourite = function(user) {
 	return new Promise((fufill, reject) => {
 		const getFavQuery = `SELECT favourites FROM favourites WHERE username='${user}'`
 		pool.query(getFavQuery, (err, rows) => {
 			if (err) {
-				console.log(err)
 				reject(err)
 			}
 			if (rows.length === zero) {
@@ -140,13 +144,11 @@ module.exports.viewFavourite = (user) => {
 	})
 }
 
-module.exports.delFavourite = (user) => {
-	console.log('delete favourites')
+module.exports.delFavourite = function(user) {
 	return new Promise((fufill, reject) => {
 		const delFavQuery = `DELETE FROM favourites WHERE username='${user}'`
 		pool.query(delFavQuery, (err) => {
 			if (err) {
-				console.log(err)
 				reject(err)
 			} else {
 				fufill(true)
@@ -155,8 +157,7 @@ module.exports.delFavourite = (user) => {
 	})
 }
 
-module.exports.changePassword = (user, newPass) => {
-	console.log('Change Password')
+module.exports.changePassword = function(user, newPass) {
 	return new Promise((fufill, reject) => {
 		//generates a salt to be added for the hashing
 		hash.genSalt(sLength, (err, salt) => {
@@ -171,7 +172,6 @@ module.exports.changePassword = (user, newPass) => {
 				const passQuery = `UPDATE Users SET password='${hash}', salt='${salt}' WHERE username='${user}'`
 				pool.query(passQuery, (err) => {
 					if (err) {
-						console.log(err)
 						reject(err)
 					} else {
 						fufill(true)

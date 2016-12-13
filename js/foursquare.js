@@ -1,6 +1,5 @@
 'use strict'
 
-const firstArray = 0
 const request = require ('https')
 const moment = require ('moment')
 const fsClientId = '3KCQWKC1IDASXU3SH4KZXBRXSC50ZXIB25LKS5O5QYND22FN' //Foursquare Client Id
@@ -17,20 +16,13 @@ const baseURL = 'https://api.foursquare.com'
 * @param {string} catID - The foursquare catagory ID chosen to limit results
 * @returns {JSON} The returned foursquare venues
 */
-module.exports.search = (lat, lon, weather, catID) => {
-	console.log('Start')
-	return new Promise((fufill, reject) => {
-		//output weather
-		console.log(`Weather is ${JSON.stringify(weather.weather[firstArray].main)}`)
+module.exports.search = function(lat, lon, weather, catID) {
+	return new Promise((fufill) => {
 		//make foursquare query url
 		const endURL = `/v2/venues/search?ll=${lat},${lon}&categoryId=${catID}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
 		const URL = baseURL + endURL
-		console.log(URL)
 		//when data is returned add to variable, when end is reached parse and return
-		request.get(URL, (res, err) => {
-			if (err) {
-				reject(err)
-			}
+		request.get(URL, (res) => {
 			let str = ''
 			res.on('data', (d) => {
 				str = str + d
@@ -50,21 +42,22 @@ module.exports.search = (lat, lon, weather, catID) => {
 module.exports.getCategories = () => {
 	//create foursquare query
 	const catURL = `https://api.foursquare.com/v2/venues/categories?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
-	return new Promise((fufill, reject) => {
-		request.get(catURL, (res, err) => {
-			if (err) {
-				reject(err)
-			} else {
-				//On returned data add to variable, then on end parse and return
-				let str = ''
-				res.on('data', (d) => {
-					str = str + d
-				})
-				res.on('end', () => {
-					const pars = JSON.parse(str)
-					fufill(pars)
-				})
-			}
+	return new Promise((fufill) => {
+		request.get(catURL, (res) => {
+			//On returned data add to variable, then on end parse and return
+			let str = ''
+			res.on('data', (d) => {
+				str = str + d
+			})
+			res.on('end', () => {
+				const pars = JSON.parse(str)
+				const out = {}
+				for (const x in pars.response.categories) {
+					const temp = pars.response.categories[x].name
+					out[ temp ] = pars.response.categories[x].id
+				}
+				fufill(out)
+			})
 		})
 	})
 }

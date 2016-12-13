@@ -126,12 +126,7 @@ server.get('/categories', (req, res) => {
 	console.log('FourSquare Catagories')
 	return new Promise((fufill, reject) => {
 		fourSquare.getCategories().then((response) => {
-			const out = {}
-			for (const x in response.response.categories) {
-				const temp = response.response.categories[x].name
-				out[ temp ] = response.response.categories[x].id
-			}
-			fufill(res.send(out))
+			fufill(res.send(response))
 		})
 		.catch((err) => {
 			reject(res.send(httpCodes.internalServerError, err))
@@ -259,12 +254,43 @@ server.del('/delFavourite', (req, res) => {
 				if (err) {
 					reject(err)
 				}
-				const location = JSON.stringify(req.body)
 				auth.login(req.headers.username, pass).then((bool) => {
 					if (bool === false) {
 						reject(res.send(httpCodes.Unauthorized))
 					} else {
-						auth.delFavourite(req.headers.username, location).then((status) => {
+						auth.delFavourite(req.headers.username).then((status) => {
+							if(status === false) {
+								res.send(httpCodes.internalServerError)
+							} else {
+								res.send(httpCodes.OK)
+							}
+						}).catch((err) => reject(err))
+					}
+				})	.catch((err) => {
+					if (err === false){
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						reject(res.send(httpCodes.internalServerError, err))
+					}
+				})
+			})
+		})
+	})
+})
+
+server.del('/delUser', (req, res) => {
+	console.log('Delete User')
+	return new Promise((fufill, reject) => {
+		auth.salt(req.headers.username).then((salt) => {
+			hash.hash(req.headers.password, salt, (err, pass) => {
+				if (err) {
+					reject(err)
+				}
+				auth.login(req.headers.username, pass).then((bool) => {
+					if (bool === false) {
+						reject(res.send(httpCodes.Unauthorized))
+					} else {
+						auth.delUser(req.headers.username).then((status) => {
 							if(status === false) {
 								res.send(httpCodes.internalServerError)
 							} else {
