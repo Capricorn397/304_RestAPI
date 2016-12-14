@@ -39,6 +39,7 @@
 		<div id="extra">
 			<button id="viewFavs">View Favourites</button>
 			<script type="text/javascript">
+			//Submit the view favourites form sending user credentials from prompts
 				document.getElementById('viewFavs').onclick = function(){
 					event.preventDefault();
 					const user = prompt('Username');
@@ -127,6 +128,7 @@
 	});
 </script>
 <script type="text/javascript">
+//Submit the main search code
 const div = document.getElementById('return');
 const par = document.createElement('P');
 const p = div.appendChild(par);
@@ -145,7 +147,7 @@ const p = div.appendChild(par);
 			const fsData = $.ajax({
 				type: 'GET',
 				url: '/search?location='+location+'&catID='+catagory+'&dat='+dateTime,
-				error: function() {
+				error: function(err) {
 					console.log(err);
 				},
 				success: function() {

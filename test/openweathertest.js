@@ -7,7 +7,7 @@ const one = 1
 const zero = 0
 const httpOk = 200
 const currentDate = new Date
-const dateTime = 'Last Sync: ' + currentDate.getFullYear() + '-' + (currentDate.getMonth()+one) + '-' + currentDate.getDate() + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds()
+const dateTime = currentDate.getFullYear() + '-' + (currentDate.getMonth()+one) + '-' + currentDate.getDate() + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds()
 
 describe('Checks openWeather', function() {
 	this.timeout(zero)
@@ -18,7 +18,7 @@ describe('Checks openWeather', function() {
 		}).catch(done)
 	})
 	it('Checks if a getWeather function error returns', (done) => {
-		oW.testGet(undefined, undefined, true).then((response) => {
+		oW.testGet(undefined, undefined).then((response) => {
 			assert.notEqual(response.cod , httpOk, 'Incorrect error output')
 			done()
 		}).catch(done)

@@ -7,6 +7,9 @@ const fsClientSecret = '2ZX3W41ODK1MWP44YZ5AGOF532W0PHHU5VVQQOAVYZZX1J1H'//Fours
 const date = new Date()
 const formattedDate = moment(date).format('YYYYMMDD')
 const baseURL = 'https://api.foursquare.com'
+const fsTopTen = 10
+const firstArray = 0
+const httpOK = 200
 
 /**
 * Searches the foursquare database for venues based on a location and catagory
@@ -17,7 +20,7 @@ const baseURL = 'https://api.foursquare.com'
 * @returns {JSON} The returned foursquare venues
 */
 module.exports.search = function(lat, lon, weather, catID) {
-	return new Promise((fufill) => {
+	return new Promise((fufill, reject) => {
 		//make foursquare query url
 		const endURL = `/v2/venues/search?ll=${lat},${lon}&categoryId=${catID}&client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${formattedDate}`
 		const URL = baseURL + endURL
@@ -29,7 +32,16 @@ module.exports.search = function(lat, lon, weather, catID) {
 			})
 			res.on('end', () => {
 				const parsed = JSON.parse(str)
-				fufill(parsed)
+				if (parsed.meta.code !== httpOK) {
+					reject(parsed.meta.code)
+				} else {
+					const data = {locations: [],links: [], weather: weather.weather[firstArray].main}
+					for(let x = 0; x < fsTopTen; x++){
+						data.locations[x] = parsed.response.venues[x].name
+						data.links[x] = parsed.response.venues[x].url
+					}
+					fufill(data)
+				}
 			})
 		})
 	}

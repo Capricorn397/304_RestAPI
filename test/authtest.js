@@ -3,33 +3,33 @@ const expect = require('chai').expect
 const chaiAsPromised = require('chai-as-promised')
 const chai = require('chai')
 const auth = require('../js/auth.js')
-const userInfo = {user: 'testingUser', pass: 'testingPass'}
+const userInfo = {'user': 'testingUser', 'pass': 'testingPass'}
 const favs = {location: 'Test Location'}
 const zero = 0
-const pass = '$2a$10$v/.NYMxupes5Vpa34u9BU.2whU4VHgobC8te8bYMbL.4aZs.g29Au'
 
 chai.use(chaiAsPromised)
 chai.should()
 describe('Checks auth.js', function() {
-	it('Checks a user can be added to the database', function() {
-		auth.register(userInfo).then((response) => {
+	it('Checks a user can be added to the database', function(done) {
+		auth.register(JSON.stringify(userInfo)).then((response) => {
 			expect(response).to.be.equal('User Registered')
+			done()
 		})
 	})
-	it('Checks addUser throws errors correctly', function() {
-		return (auth.register({user: 'favtest', pass: 'test'})).should.eventually.be.rejected
-	})
-	it('Checks a registered user can login', function() {
-		auth.login('testUser', pass).then((response) => {
+	it('Checks a registered user can login', function(done) {
+		auth.login('testUser', 'test').then((response) => {
 			expect(response).to.be.equal(true)
+			done()
 		})
 	})
-	it('Checks a wrong user+password combination is rejected correctly', function() {
-		return (auth.login({user: 'testUser', pass: 'wrong'})).should.eventually.be.rejected
+	it('Checks an unregistered user is rejected correctly', function(done) {
+		auth.login('notRegistered', 'notreg').then(() => {
+			done('No Error Thrown')
+		}).catch((err) => {
+			expect(err).to.be.equal('Not Registered')
+			done()
+		})
 	})
-	/*it('Checks an unregistered user is rejected correctly', function() {
-		return (auth.login({user: null, pass: null})).should.eventually.be.rejected
-	})*/
 	it('Checks a user\'s salt can be retrieved', function() {
 		return (auth.salt('testUser')).should.eventually.be.fulfilled
 	})
@@ -37,47 +37,38 @@ describe('Checks auth.js', function() {
 		auth.salt('notRegistered').then(() => {
 			done('No Error Thrown')
 		}).catch((err) => {
-			expect(err).to.be.equal(false)
+			expect(err).to.be.equal('Not Registered')
 			done()
 		})
 	})
-	it('Checks a user can add to their favourites', function() {
+	it('Checks a user can add to their favourites', function(done) {
 		auth.addFavourite('testingUser', JSON.stringify(favs)).then((response) => {
 			expect(response).to.be.equal(true)
+			done()
 		})
 	})
-	it('Checks addFavourite errors correctly', function(done) {
-		auth.addFavourite(undefined, undefined).then(() => {
-			done('No error thrown')
-		}).catch((err) => {
-			expect(err).to.not.equal(null)
-		})
-	})
-	it('Checks a user can view their favourites', function() {
-		auth.viewFavourite('testingUser').then((response) => {
+	it('Checks a user can view their favourites', function(done) {
+		auth.viewFavourite('favtest').then((response) => {
 			expect(response.length).to.not.equal(zero)
+			done()
 		})
 	})
-	it('Checks a user can delete their favourites', function() {
+	it('Checks a user can delete their favourites', function(done) {
 		auth.delFavourite('testingUser').then((response) => {
 			expect(response).to.be.equal(true)
+			done()
 		})
 	})
-	it('Checks a user with no favourites throws an error', function(done) {
-		auth.delFavourite('notRegistered').then(() => {
-			done('No error thrown')
-		}).catch((err) => {
-			expect(err).to.not.equal(undefined)
-		})
-	})
-	it('Checks a user can change password', function() {
-		auth.changePassword('testingUser', 'newPassword').then((response) => {
+	it('Checks a user can change password', function(done) {
+		auth.changePassword('testingUser', JSON.stringify({'newPass': 'newPassword'})).then((response) => {
 			expect(response).to.be.equal(true)
+			done()
 		})
 	})
-	it('Checks a user can be deleted', function() {
+	it('Checks a user can be deleted', function(done) {
 		auth.delUser('testingUser').then((response) => {
 			expect(response).to.be.equal(true)
+			done()
 		})
 	})
 })
