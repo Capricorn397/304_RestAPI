@@ -1,6 +1,6 @@
 'use strict'
 const expect = require('chai').expect
-const request = require('Request')
+const request = require('request')
 const index = require('../js/index.js')
 const one = 1
 const currentDate = new Date
