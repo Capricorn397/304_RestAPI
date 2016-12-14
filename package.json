@@ -4,7 +4,7 @@
   "description": "a rest api for a coursework hand in for 304cem",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,12 @@
     "restify": "^4.2.0"
   },
   "devDependencies": {
-    "mocha": "^3.1.2"
+    "assert-rejected": "^1.1.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "request": "^2.79.0",
+    "sinon": "^1.17.6"
   }
 }

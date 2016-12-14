@@ -7,8 +7,8 @@ const locConvert = require ('geocoder')
 * @param {string} input - The chosen location
 * @returns {JSON} The geocoder data including the latitude and longitude
 */
-module.exports = (input) =>
-	new Promise((fufill, reject) => {
+module.exports = function(input) {
+	return new Promise((fufill, reject) => {
 		//Following function cannot be changed to arrow as package does not support it
 		locConvert.geocode(input, function(err, res){
 			if (err) {
@@ -18,3 +18,4 @@ module.exports = (input) =>
 			}
 		})
 	})
+}

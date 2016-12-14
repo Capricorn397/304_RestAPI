@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">js/</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.62% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>104/129</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>16/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.47% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>103/128</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+const geoCoder = require('./geoCoder.js')
+const weather = require('./openWeather.js')
+const serverclass = require('./serverinfo.js')
+const fourSquare = require('./foursquare.js')
+const auth = require('./auth.js')
+const restify = require('restify')
+const error = ''
+const port = 8000
+const firstArray = 0
+const twoDP = 2
+const server = restify.createServer({
+	name: '304Server',
+	version: '0.1.0'
+})
+const httpCodes = {
+	OK: 200,
+	Created: 201,
+	Unauthorized: 401,
+	Forbidden: 403,
+	notFound: 404,
+	methodNotAllowed: 405,
+	requestTimeout: 408,
+	internalServerError: 500
+}
+&nbsp;
+&nbsp;
+/**
+* Creates the server on the port 8000
+* @returns {NULL} nothing returned server remains on and listening on port
+*/
+const serv = module.exports.testServer = () =&gt; {
+	exports.info = new serverclass(server.url, port, error, server.name)
+	server.listen(port, () =&gt; {
+		console.log(`Server at ${server.url}`)
+		exports.info.logEvent(`${server.name} listening at ${server.url}`)
+	})
+}
+/**
+* Function to export starting the server for use in tests
+* @returns {NULL} nothing returns just keeps server listening on port
+*/
+&nbsp;
+serv()
+//Tell the server to parse querys and bodys
+server.use(restify.queryParser())
+server.use(restify.bodyParser())
+&nbsp;
+//Foursquare search
+//INPUT: location (string), catagoryID (string), Date and time (date)
+//OUTPUT: JSON results with name, location and links
+server.get('/search?', (req, res) =&gt; {
+	const catID = req.query.catID
+	const input = req.query.location
+	const dat = req.query.date
+	geoCoder(input).then((response) =&gt; {
+		const lat = response.results[firstArray].geometry.location.lat.toFixed(twoDP)
+		const lon = response.results[firstArray].geometry.location.lng.toFixed(twoDP)
+		weather.getWeatherTime(lat, lon, dat)
+			.then((response) =&gt; {
+				fourSquare.search(lat, lon, response, catID)
+				.then((respo) =&gt; {
+					res.send(respo)
+				}).catch((err) =&gt; res.send(httpCodes.internalServerError,err))
+			})
+	}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError, err))</span>
+})
+&nbsp;
+//Gets the weather for a given location and time
+//INPUT: location (string), date and time (date)
+//OUTPUT: JSON of relevant weather data returned
+server.get('/weather', (req, res) =&gt; {
+	geoCoder(req.query.location).then((response) =&gt; {
+		weather.getWeatherTime(response.results[firstArray].geometry.location.lat.toFixed(twoDP), response.results[firstArray].geometry.location.lng.toFixed(twoDP), req.query.time).then((respons) =&gt; {
+			res.send(respons)
+		})
+		.catch((err) =&gt; {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.internalServerError, err)</span>
+		})
+	})
+})
+&nbsp;
+//Get the foursquare catagories with their ID's
+//INPUT: none beyond the URL
+//OUTPUT: key value pairs of {catagoryName: catagoryID}
+server.get('/categories', (req, res) =&gt; {
+	<span class="missing-if-branch" title="if path not taken" >I</span>if (req.query.err === true) {
+<span class="cstat-no" title="statement not covered" >		throw new Error('Error test')</span>
+	} else {
+		fourSquare.getCategories().then((response) =&gt; {
+			res.send(response)
+		})
+		.catch((err) =&gt; {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.internalServerError, err)</span>
+		})
+	}
+})
+&nbsp;
+//Registers a new user
+//INPUT: username (string), password (string)
+//OUTPUT: Success or failure message
+server.post('/register', (req, res) =&gt; {
+	auth.register(req.body).then((token) =&gt; res.send(httpCodes.Created, token))
+	.catch((err) =&gt; res.send(httpCodes.internalServerError, err))
+})
+&nbsp;
+//Logs a user in
+//INPUT: username (string), password (string)
+//OUTPUT: Success string
+server.get('/login', (req, res) =&gt; {
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		<span class="missing-if-branch" title="else path not taken" >E</span>if (bool === true) {
+			res.send('Success')
+		} else {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized, 'Invalid Login')</span>
+		}
+	})
+	.catch((err) =&gt; res.send(httpCodes.Unauthorized, err))
+})
+&nbsp;
+//Adds a location to a users favourites
+//INPUT: A foursquare location in JSON with link attached
+//OUTPUT: HTTP code for added or error
+server.post('/addFavourite', (req, res) =&gt; {
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		const location = JSON.stringify(req.body)
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (bool !== true) {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			auth.addFavourite(req.headers.username, location).then((status) =&gt; {
+				<span class="missing-if-branch" title="if path not taken" >I</span>if(status === false) {
+<span class="cstat-no" title="statement not covered" >					res.send(httpCodes.internalServerError)</span>
+				} else {
+					res.send(httpCodes.Created)
+				}
+			}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError,err))</span>
+		}
+	}).catch((err) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (err === false){
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			res.send(httpCodes.internalServerError, err)
+		}
+	}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.Unauthorized, err))</span>
+})
+&nbsp;
+//Get the favourites for a given user
+//INPUT: user credentials as headers
+//OUTPUT: JSON object of user's favourites
+server.get('/viewFavourites', (req, res) =&gt; {
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (bool !== true) {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			auth.viewFavourite(req.headers.username).then((items) =&gt; {
+				<span class="missing-if-branch" title="if path not taken" >I</span>if(items === false) {
+<span class="cstat-no" title="statement not covered" >					res.send('No Favourites')</span>
+				} else {
+					res.send(items[firstArray].favourites)
+				}
+			}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError,err))</span>
+		}
+	}).catch((err) =&gt; {
+		res.send(httpCodes.Unauthorized, err)
+	})
+})
+&nbsp;
+//Delete the favourites for a given user
+//INPUT: user credentials as headers
+//OUTPUT: Error or OK code
+server.del('/delFavourite', (req, res) =&gt; {
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (bool !== true) {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			auth.delFavourite(req.headers.username).then((status) =&gt; {
+				<span class="missing-if-branch" title="if path not taken" >I</span>if(status === false) {
+<span class="cstat-no" title="statement not covered" >					res.send(httpCodes.internalServerError)</span>
+				} else {
+					res.send(httpCodes.OK)
+				}
+			}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError,err))</span>
+		}
+	}).catch((err) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (err === false){
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			res.send(httpCodes.internalServerError, err)
+		}
+	})
+})
+&nbsp;
+//Delete a user
+//INPUT: user credentials as headers
+//OUTPUT: Error or an OK code
+server.del('/delUser', (req, res) =&gt; {
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (bool !== true) {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			auth.delUser(req.headers.username).then((status) =&gt; {
+				<span class="missing-if-branch" title="if path not taken" >I</span>if(status === false) {
+<span class="cstat-no" title="statement not covered" >					res.send(httpCodes.internalServerError)</span>
+				} else {
+					res.send(httpCodes.OK)
+				}
+			}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError,err))</span>
+		}
+	}).catch((err) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (err === false){
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			res.send(httpCodes.internalServerError, err)
+		}
+	})
+})
+&nbsp;
+//Changes a user's password
+//INPUT: user credentials as headers and a body with the new password
+//OUTPUT: Error or an OK code
+server.put('/changePassword', (req, res) =&gt; {
+	const newPass = req.body
+	const username = req.headers.username
+	const password = req.headers.password
+	auth.login(username, password).then((bool) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (bool !== true) {
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			auth.changePassword(req.headers.username, newPass).then((status) =&gt; {
+				<span class="missing-if-branch" title="if path not taken" >I</span>if(status === false) {
+<span class="cstat-no" title="statement not covered" >					res.send(httpCodes.internalServerError)</span>
+				} else {
+					res.send(httpCodes.OK)
+				}
+			}).catch((err) =&gt; <span class="cstat-no" title="statement not covered" >res.send(httpCodes.internalServerError, err))</span>
+		}
+	}).catch((err) =&gt; {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (err === false){
+<span class="cstat-no" title="statement not covered" >			res.send(httpCodes.Unauthorized)</span>
+		} else {
+			res.send(httpCodes.internalServerError, err)
+		}
+	})
+})
+&nbsp;
+//All below routes are for delivering Pages/HTML/JavaScript for the frontend
+server.get('/home.html', restify.serveStatic({
+	directory: './views',
+	file: 'home.html'
+}))
+server.get('views/addOns/timePicker.js', restify.serveStatic({
+	directory: './views/addOns',
+	file: 'timePicker.js'
+}))
+server.get('views/addOns/timePickerCSS.css', restify.serveStatic({
+	directory: './views/addOns',
+	file: 'timePickerCSS.css'
+}))
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Dec 14 2016 03:09:46 GMT+0000 (GMT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

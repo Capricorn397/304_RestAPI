@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for js/openWeather.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">js/</a> openWeather.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>24/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>24/24</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">185×</span>
+<span class="cline-any cline-yes">185×</span>
+<span class="cline-any cline-yes">185×</span>
+<span class="cline-any cline-yes">185×</span>
+<span class="cline-any cline-yes">185×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+const http = require('http')
+const apiKey = 'b33a9d84c1ef3bf789910201b1781396'
+const baseURL = 'http://api.openweathermap.org'
+&nbsp;
+/**
+* Gets the nearest time to chosen from the 3 hour weather given from openweather
+* @param {float} lat - The latitude value of the chosen location
+* @param {float} lng - The longitude value of the chosen location
+* @param {date} tme - The date and time for the weather to be gotten from
+* @returns {date} The chosen closest time
+*/
+exports.getWeatherTime = (lat, lng, tme) =&gt;
+	new Promise((resolve, reject) =&gt; {
+		const userDate = new Date(tme)
+		getWeather(lat, lng).then((response) =&gt; {
+			resolve(response.list.reduce((acc, val) =&gt; {
+				//Set each with a date from the openWeather return and the chosen date then compare which is closest and return that date					const accDate = new Date(acc.dt_txt)
+				const accDate = new Date(acc.dt_txt)
+				const valDate = new Date(val.dt_txt)
+				const accDateAccuracy = Math.abs(accDate.getTime() - userDate.getTime())
+				const valDateAccuracy = Math.abs(valDate.getTime() - userDate.getTime())
+				return accDateAccuracy &gt; valDateAccuracy ? <span class="branch-0 cbranch-no" title="branch not covered" >val </span>: acc
+			}))
+			//Catch any random errors
+		}).catch(reject)
+	})
+&nbsp;
+/**
+* Gets the 5 day (every 3 hours) weather forecast for a chosen location
+* @param {float} lat - The latitude of the chosen location
+* @param {float} lng - The longitude of the chosen location
+* @returns {JSON} The returned JSON data from openWeather
+*/
+const getWeather = module.exports.testGet = (lat, lng) =&gt; {
+	const endURL = `/data/2.5/forecast?lat=${lat}&amp;lon=${lng}&amp;APPID=${apiKey}&amp;temp=celsius`
+	//console.log to stop eslint warning with arrow functions immediately followed by return
+	return new Promise((fufill) =&gt; {
+		//set openWeather URL
+		const URL = baseURL + endURL
+		//openWeather request
+		http.get(URL, (res) =&gt; {
+			//on data add to variable, when data reaches the end parse and return
+			let str = ''
+			res.on('data', (d) =&gt; {
+				str = str + d
+			})
+			res.on('end', () =&gt; {
+				const parsed = JSON.parse(str)
+				fufill(parsed)
+			})
+		})
+	})
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Dec 14 2016 03:09:46 GMT+0000 (GMT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,6 +1,32 @@
 'use strict'
 const assert = require('assert')
-const apikey = 'b33a9d84c1ef3bf789910201b1781396'
-//It will test whether a call can be made using the code and test whether the replies are valid and expected
-//check for the weather and temperature in a specific hard coded location
-//check ability to move the data to a handler for the front end
+const oW = require('../js/openWeather.js')
+const lat = 52.41
+const lon = -1.52
+const one = 1
+const zero = 0
+const httpOk = 200
+const currentDate = new Date
+const dateTime = currentDate.getFullYear() + '-' + (currentDate.getMonth()+one) + '-' + currentDate.getDate() + ' ' + currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds()
+
+describe('Checks openWeather', function() {
+	this.timeout(zero)
+	it('Checks if a getWeather function returns weather data', (done) => {
+		oW.testGet(lat, lon).then((response) => {
+			assert.equal(response.cod , httpOk, 'Incorrect returned JSON')
+			done()
+		}).catch(done)
+	})
+	it('Checks if a getWeather function error returns', (done) => {
+		oW.testGet(undefined, undefined).then((response) => {
+			assert.notEqual(response.cod , httpOk, 'Incorrect error output')
+			done()
+		}).catch(done)
+	})
+	it('Checks if a getWeatherTime function returns sorted weather data', (done) => {
+		oW.getWeatherTime(lat, lon, dateTime).then((response) => {
+			assert.notEqual(response.weather[zero].main , undefined, 'Incorrect returned Data')
+			done()
+		}).catch(done)
+	})
+})
