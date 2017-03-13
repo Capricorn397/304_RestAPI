@@ -3,7 +3,7 @@ ___
 ### Files under /views/addOns are from external sources and are only used to provide a date and time picker on the webpage. They should not be taken into account for linting errors etc.
 ---
 ## A Things to do API
-##### Should be available at http://164.132.195.20:8000/home.html (all api requests can be made to the same ip:port)
+##### {DEPRECATED NO LONGER AVAILABLE}Should be available at http://164.132.195.20:8000/home.html (all api requests can be made to the same ip:port)
 
 ---
 ## List of endpoints - 
