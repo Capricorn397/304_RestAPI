@@ -4,6 +4,7 @@
   "description": "a rest api for a coursework hand in for 304cem",
   "main": "index.js",
   "scripts": {
+	"start": "node index.js",
     "test": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- -R spec"
   },
   "repository": {
